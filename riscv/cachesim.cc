@@ -129,6 +129,12 @@ void cache_sim_t::access(uint64_t addr, size_t bytes, bool store)
   uint64_t* hit_way = check_tag(addr);
   if (likely(hit_way != NULL))
   {
+    if (log)
+    {
+      std::cerr << name << " "
+                << (store ? "write" : "read") << " hit 0x"
+                << std::hex << addr << std::endl;
+    }
     if (store)
       *hit_way |= DIRTY;
     return;
